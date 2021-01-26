@@ -204,7 +204,7 @@ public class MemberController {
 			return "redirect:home.do";
 		}else {
 			model.addAttribute("msg","로그인 실패");
-			return "common";
+			return "common/errorPage";
 		}
 	}
 	
@@ -219,7 +219,10 @@ public class MemberController {
 	}
 	
 	// ---------------- 회원 가입 ----------------- //
-	
+	@RequestMapping("enrollView.do")
+	public String enrollView() {
+		return "member/memberInsertForm";
+	}
 	
 	
 }
