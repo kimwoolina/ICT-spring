@@ -1,0 +1,78 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<web-app version="2.5" xmlns="http://java.sun.com/xml/ns/javaee"
+	xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+	xsi:schemaLocation="http://java.sun.com/xml/ns/javaee https://java.sun.com/xml/ns/javaee/web-app_2_5.xsd">
+
+	<!--  
+		* web.xml
+		Tomcat(WAS) 실행 시 web.xml을 제일 먼저 읽게 된다.
+		- 서버 실행 시 초기에 읽어야할 설정 xml문서들을 읽도록 web.xml에 등록
+		
+	-->
+
+	<!-- The definition of the Root Spring Container shared by all Servlets and Filters -->
+	<!--
+		* contextConfigLocation
+		설정 xml 문서를 로딩 시 설정 xml 문서의 경로를 작성하기 위한 param-name/value 
+	-->
+	
+	<context-param>
+		<param-name>contextConfigLocation</param-name>
+		<param-value>/WEB-INF/spring/root-context.xml</param-value>
+	<!-- 1.root-context.xml을 소스 최상위패스("src/main/resources/" => classpath) -->
+	<!-- <param-value>classpath:root-contex.xml</param-value> -->
+	</context-param>
+	
+	<!-- 
+		* ContextLoaderListner
+		web.xml 내부에 읽어 들어야 할 설정 xml 문서들 중 가장 먼저 로딩(pre-loading)되어야 하는 xml문서를 읽기 위한 리스너
+	-->
+	<!-- Creates the Spring Container shared by all Servlets and Filters -->
+	<listener>
+		<listener-class>org.springframework.web.context.ContextLoaderListener</listener-class>
+	</listener>
+
+	<!-- Processes application requests -->
+	<!-- 
+		* DispatcherServlet
+		url-pattern(요청)에 해당하는 viewResolver, HandlerMapping 정보들을
+		저장하고 있는 설정 xml 문서를 등록한다.(servlet-context.xml)
+	-->
+	<servlet>
+		<servlet-name>appServlet</servlet-name>
+		<servlet-class>org.springframework.web.servlet.DispatcherServlet</servlet-class>
+		<init-param>
+			<param-name>contextConfigLocation</param-name>
+			<param-value>/WEB-INF/spring/appServlet/servlet-context.xml</param-value>
+		</init-param>
+		<load-on-startup>1</load-on-startup>
+	</servlet>
+		
+	<servlet-mapping>
+		<servlet-name>appServlet</servlet-name>
+		<url-pattern>*.do</url-pattern>
+		<!--  앞으로 *.do인 요청들을 DispatcherServlet에서 HandlerMapping을 통해 해당하는 Controller로 요청하겠다. -->
+	</servlet-mapping>
+	
+	<!--  공용 에러페이지 등록 -->
+	<error-page>
+		<exception-type>java.lang.Exception</exception-type>
+		<location>/WEB-INF/views/common/errorPage.jsp</location>
+	</error-page>
+	
+	<!-- 한글 깨짐 방지 인코딩 -->
+	<filter>
+		<filter-name>encodingFilter</filter-name>
+		<filter-class>org.springFramework.web.filter.CharacterEncodingFilter</filter-class>
+		<init-param>
+			<param-name>encoding</param-name>
+			<param-value>UTF-8</param-value>
+		</init-param>
+	</filter>
+	
+	<!-- url로 어떤 요청이 오느냐에 따라서 해당 필터를 거쳐가게끔 할지 url-pattern을 작성 -->
+	<filter-mapping>
+		<filter-name>encodingFilter</filter-name>
+		<url-pattern>/*</url-pattern>
+	</filter-mapping>
+</web-app>
