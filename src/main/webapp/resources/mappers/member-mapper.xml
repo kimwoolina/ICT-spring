@@ -24,6 +24,24 @@
 	WHERE ID = #{ id }
 		AND PWD = #{ pwd }
 		AND M_STATUS = 'Y'  
-  </select>
+  </select> <!-- 여기서 #{}값은 vo의 getter에서 가져오는 값 -->
+  
+  <select id="insertMember" parameterType="Member">
+	INSERT 
+	  INTO MEMBER 
+	VALUES (
+			 #{id}
+			, #{pwd}
+			, #{name}
+			, #{email}
+			, #{gender}
+			, #{age}
+			, #{phone}
+			, #{address}
+			, sysdate
+			, sysdate
+			, default
+			)
+  </select> 
 
 </mapper>

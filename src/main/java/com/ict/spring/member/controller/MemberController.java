@@ -3,6 +3,8 @@ package com.ict.spring.member.controller;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpSession;
 
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.ModelAttribute;
@@ -25,7 +27,15 @@ import com.ict.spring.member.model.vo.Member;
 			//이름을 지정하지 않으면 클래스명 앞에 글자를 소문자로 해서 id가 만들어진다.
 public class MemberController {
 
+	@Autowired
 	private MemberService mService;
+	
+	//암호화 처리(spring-security에 bean등록 후) 작성
+	@Autowired
+	private BCryptPasswordEncoder bcyptPasswordEncoder;
+	
+	
+	
 	
 	/*
 	 * @RequestMapping(value="login.do", method=RequestMethod.POST)
@@ -35,13 +45,13 @@ public class MemberController {
 	 * @RequestMapping의 속성
 	 * 여러개의 속성을 명시할 때는 "value=","method="를 명시해야되고
 	 * value만 명시해야되는 경우 직접적으로 @RequestMapping("login.do")처럼 생략가능
-	 * 
+	 * '
 	 * (value="", method="")와 같이 매핑 조건을 부여하고 전달하는 method 방식을 지정해준다.
 	 * */
 	
 	//파라미터를 전송하는 방법
 	/*
-	 * 1.HeepServletRequest를 통해 전송받기(기존 jsp/servlet때 방식)
+	 * 1.HttpServletRequest를 통해 전송받기(기존 jsp/servlet때 방식)
 	 * 메소드의 매개변수로 HttpServletRequest를 작성하면 메소드 실행 시
 	 * 스프링 컨테이너가 자동으로 객체를 인자로 주입해준다.
 	 * 
@@ -59,7 +69,7 @@ public class MemberController {
 	}
 	
 	/*
-	 * 2. @RequestParam 어노테이션 바익
+	 * 2. @RequestParam 어노테이션 방법
 	 * 
 	 * 스프링에서는 조금 더 간단하게 파라미터를 받아올 수 있는 방법 제공
 	 * HttpServlet과 비슷하게 request객체를 이용하여 데이터를 전송받는 방법
@@ -224,5 +234,56 @@ public class MemberController {
 		return "member/memberInsertForm";
 	}
 	
-	
+	@RequestMapping("minsert.do")
+	public String insertMember (@ModelAttribute Member m, Model model,
+								@RequestParam("post") String post,
+								@RequestParam("address1") String address1,
+								@RequestParam("address2") String address2) {
+		System.out.println("Member 정보 : " + m);
+		
+		System.out.println("Address 정보 : " + post + ", " + address1 + ", " + address2);
+
+		//똑같은 비밀번호를 암호화 처리해도 암호화 처리 후 값이 달라진다.	
+		System.out.println("암호화 처리 후 값 : " + bcyptPasswordEncoder.encode(m.getPwd()));
+		
+		/*
+		 * 비밀번호 -> 평문으로 되어 있다.  
+		 * DB에 저장을 할 때 평문으로 저장하면 안되기 때문에 "암호화"처리를 한다.
+		 * 
+		 * 스프링 시큐리티라는 모듈에서 제공하는 bcrypt라는 암호화 방식으로 암호화 처리를 할꺼다.
+		 * 
+		 * bcrypt란?
+		 * DB에 비밀번호를 저장할 목적으로 설계되었다.
+		 * 
+		 * jsp/servlet 에서 했던 SHA-512 암호화 (단방향 해쉬 알고리즘)
+		 * 
+		 * 단점 : 111 평문 동일한 암호화 코드를 반화한다.
+		 * 
+		 * 해결점 : 솔팅(salting) -> 원문에 아주작은 랜덤 문자열 추가해서 암호화 코드를 발생시킨다.
+		 * 
+		 * */
+		
+		//기존의 평문을 암호문으로 바꿔서 m객체에 다시 담자
+		String encPwd = bcyptPasswordEncoder.encode(m.getPwd());
+		
+		//setter를 통해서 Member 객체의 pwd를 변경
+		m.setPwd(encPwd);
+		
+		//주소 데이터를 ", "를 구분자로 저장
+		if(!post.equals("")) {
+			m.setAddress(post + "," + address1 + ", " + address2);
+		}
+		
+		System.out.println("수정된 Member객체 :" + m);
+		
+		//회원가입 서비스를 호출
+		int result = mService.insertMember(m);
+		
+		if(result>0) {
+			return "redirect:home.do";
+		}else {
+			model.addAttribute("msg","회원가입실패!");
+			return "common/errorPage";
+		}
+	}
 }
