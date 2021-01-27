@@ -5,6 +5,7 @@
 <head>
 <meta charset="UTF-8">
 <title>Insert title here</title>
+<link ref="shortcut icon" type="image/x-icon" href="resources/images/sitelogo.png"/>
 <style>
 	*{
 		box-sizing:board-box;
@@ -33,6 +34,7 @@
 		height: 100%;
 		pointer-events: none;
 	}
+
 	@media ( min-aspect-ratio : 16/9) {
 		.video-foreground {
 			height: 300%;
