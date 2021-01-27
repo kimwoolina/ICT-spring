@@ -19,14 +19,21 @@
   </resultMap>
   
   <select id="loginMember" parameterType="Member" resultMap="memberResultSet">
-	SELECT *
+	<!-- 암호화 전 -->
+	<!-- SELECT *
 	FROM MEMBER
 	WHERE ID = #{ id }
 		AND PWD = #{ pwd }
-		AND M_STATUS = 'Y'  
+		AND M_STATUS = 'Y'  --> 
+	<!-- 암호화 후 -->
+	SELECT 
+		   *
+	  FROM MEMBER
+	  WHERE ID=#{ id }
+	  	AND M_STATUS= 'Y' <!-- 사용자 있는지 없는 지 여부만 판단한후 있으면 정보값 다 가져온다. -->
   </select> <!-- 여기서 #{}값은 vo의 getter에서 가져오는 값 -->
   
-  <select id="insertMember" parameterType="Member">
+  <insert id="insertMember" parameterType="Member">
 	INSERT 
 	  INTO MEMBER 
 	VALUES (
@@ -42,6 +49,25 @@
 			, sysdate
 			, default
 			)
-  </select> 
+  </insert>
+  
+  <update id="updateMember" parameterType="String">
+	UPDATE 
+		MEMBER
+	SET M_STATUS = 'N'
+	WHERE ID = #{id}
+  </update> 
+  
+  <update id="updateMember" parameterType="Member">
+  	UPDATE
+  		   MEMBER
+  	   SET
+  	       EMAIL=#{ email }
+  	       , AGE = #{ age }
+  	       , PHONE = #{ phone }
+  	       , ADDRESS = #{address}
+  	       , UPDATE_DATE = SYSDATE
+  	   WHERE ID = #{ id }
+  </update>
 
 </mapper>
