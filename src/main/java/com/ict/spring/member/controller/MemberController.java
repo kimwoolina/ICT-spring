@@ -317,6 +317,10 @@ public class MemberController {
 								@RequestParam("post") String post,
 								@RequestParam("address1") String addr1,
 								@RequestParam("address2") String addr2) {
+		String encPwd = bcryptPasswordEncoder.encode(m.getPwd());
+		
+		m.setPwd(encPwd);
+		
 		//주소 데이터를 ","를 구분자로 두고 저장
 		if(!post.equals("")) {
 			m.setAddress(post + "," + addr1 + "," + addr2);
