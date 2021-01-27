@@ -321,6 +321,8 @@ public class MemberController {
 		
 		m.setPwd(encPwd);
 		
+		System.out.println(encPwd);
+		
 		//주소 데이터를 ","를 구분자로 두고 저장
 		if(!post.equals("")) {
 			m.setAddress(post + "," + addr1 + "," + addr2);
