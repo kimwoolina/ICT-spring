@@ -1,8 +1,14 @@
 package com.ict.spring.member.controller;
 
+import java.io.IOException;
+import java.io.PrintWriter;
+
 import javax.servlet.http.HttpServletRequest;
+import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
 
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.stereotype.Controller;
@@ -11,6 +17,7 @@ import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
+import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.bind.annotation.SessionAttributes;
 import org.springframework.web.bind.support.SessionStatus;
 import org.springframework.web.servlet.ModelAndView;
@@ -34,6 +41,8 @@ public class MemberController {
 	@Autowired
 	private BCryptPasswordEncoder bcryptPasswordEncoder;
 	
+	// 로깅시 추가
+	private Logger logger = LoggerFactory.getLogger(MemberController.class);
 	
 	/*
 	 * @RequestMapping(value="login.do",method=RequestMethod.POST)
@@ -234,6 +243,10 @@ public class MemberController {
 	// -------------------------------- 회원 가입 -------------------------------//
 	@RequestMapping("enrollView.do")
 	public String enrollView() {
+		
+		if(logger.isDebugEnabled()) // 프로젝트 배포시에 성능저하를 막기위해 logger의 레벨이 DEBUG인지 여부를 확인
+			logger.debug("회원등록페이지");
+		
 		return "member/memberInsertForm";
 	}
 	
@@ -355,6 +368,35 @@ public class MemberController {
 		}else {
 			model.addAttribute("msg", "회원 탈퇴 실패!");
 			return "common/errorPage";
+		}
+	}
+	
+	/** 1. 기존의 방식대로 Stream을 이용한 방식
+	 * @param id
+	 * @param response
+	 */
+//	@RequestMapping("idCheck.do")
+//	public void idCheck(String id, HttpServletResponse response) throws IOException {
+//		int result = mService.idCheck(id);
+//
+//		PrintWriter out = response.getWriter();
+//
+//		if(result > 0) { // 중복 존재
+//			out.print("fail");
+//		}else {
+//			out.print("ok");
+//		}
+//	}
+
+	@ResponseBody
+	@RequestMapping("idCheck.do")
+	public String idCheck(String id) {
+		int result = mService.idCheck(id);
+		
+		if(result>0) {
+			return "fail";
+		}else {
+			return "ok";
 		}
 	}
 	

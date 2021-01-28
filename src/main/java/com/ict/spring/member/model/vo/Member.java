@@ -14,9 +14,8 @@ public class Member {
 	private Date enrollDate;
 	private Date updateDate;
 	private String mStatus;
-
-	public Member() {
-	}
+	
+	public Member() {}
 
 	public Member(String id, String pwd, String name, String email, String gender, int age, String phone,
 			String address, Date enrollDate, Date updateDate, String mStatus) {
@@ -128,8 +127,5 @@ public class Member {
 				+ ", age=" + age + ", phone=" + phone + ", address=" + address + ", enrollDate=" + enrollDate
 				+ ", updateDate=" + updateDate + ", mStatus=" + mStatus + "]";
 	}
-	
-	
-	
 	
 }

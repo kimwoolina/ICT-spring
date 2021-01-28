@@ -70,7 +70,12 @@
 		 WHERE ID = #{ id }  
 	</update>
 	
-	
+	<select id="idCheck" parameterType="string" resultType="_int">
+		SELECT
+			COUNT(*)
+		FROM MEMBER
+		WHERE id = #{id}
+	</select>
 	
 	
 	
