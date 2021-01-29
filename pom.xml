@@ -204,7 +204,13 @@
 		    <artifactId>spring-security-config</artifactId>
 		    <version>5.2.1.RELEASE</version>
 		</dependency>
-				
+		
+		<dependency>
+            <groupId>org.projectlombok</groupId>
+            <artifactId>lombok</artifactId>
+            <version>1.18.12</version>
+            <scope>provided</scope>
+      </dependency>
 	</dependencies>
     <build>
         <plugins>
