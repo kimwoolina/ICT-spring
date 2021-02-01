@@ -1,0 +1,19 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="noticeMapper">
+	
+	<resultMap id="noticeResultSet" type="Notice">
+		<id property="nid" column="NID"/>
+		<result property="ntitle" column="NTITLE"/>
+		<result property="nwriter" column="NWRITER"/>
+		<result property="ncontent" column="NCONTENT"/>
+		<result property="n_create_date" column="N_CREATE_DATE"/>
+		<result property="n_modify_date" column="N_MODIFY_DATE"/>
+		<result property="file_path" column="FILE_PATH"/>
+	</resultMap>
+	
+	<select id="selectAll" resultMap="noticeResultSet">
+		select * from notice
+		order by nid desc
+	</select>	
+</mapper>
