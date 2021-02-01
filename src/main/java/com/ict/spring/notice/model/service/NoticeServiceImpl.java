@@ -21,7 +21,7 @@ public class NoticeServiceImpl implements NoticeService {
 
 	@Override
 	public Notice selectnotice(int nid) {
-		return null;
+		return noticeDao.selectOne(nid);
 	}
 
 	@Override

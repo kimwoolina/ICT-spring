@@ -24,7 +24,7 @@ public class NoticeDao {
 	}
 	
 	public Notice selectOne(int nid) {
-		return null;
+		return sqlSession.selectOne("noticeMapper.selectNotice",nid);
 	}
 	
 	public int insertNotice(Notice notice) {

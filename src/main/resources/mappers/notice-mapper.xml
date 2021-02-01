@@ -15,5 +15,13 @@
 	<select id="selectAll" resultMap="noticeResultSet">
 		select * from notice
 		order by nid desc
-	</select>	
+	</select>
+	
+	<select id="selectNotice" parameterType="_int" resultMap="noticeResultSet">
+		select * from notice
+		where nid = #{nid}
+	</select>
+	
+	
+		
 </mapper>
