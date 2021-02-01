@@ -22,6 +22,15 @@
 		where nid = #{nid}
 	</select>
 	
-	
+	<insert id="insertNotice" parameterType="Notice">
+		insert into notice
+		<if test="file_path != null">
+		values (seq_nid.nextval, #{ntitle}, #{nwriter}, #{ncontent}, default, default, #{file_path})
+		</if>
+		<if test="file_path == null">
+		(nid, ntitle, nwriter, ncontent, n_create_date, n_modify_date)
+		values (seq_nid.nextval, #{ntitle}, #{nwriter}, #{ncontent}, default, default )
+		</if>
+	</insert>
 		
 </mapper>
