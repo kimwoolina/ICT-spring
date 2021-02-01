@@ -50,4 +50,9 @@ public class NoticeController {
 		}
 	}
 	
+	//공지글 등록 페이지 요청 처리용
+	@RequestMapping("nwform.do")
+	public String noticeWriteForm() {
+		return "notice/noticeWriteForm";
+	}
 }
