@@ -55,7 +55,7 @@ public class NoticeController {
 			//관리자가 상세보기 요청했을 떄
 			Member loginUser = (Member)session.getAttribute("loginUser");
 			if(loginUser != null && loginUser.getId().equals("admin123")) {
-				return "notice/";
+				return "notice/noticeAdminDetailView";
 			}else {
 				//관리자가 아닌 고객이 상세보기 요청했을 때
 				return "notice/noticeDetailView";
@@ -71,6 +71,20 @@ public class NoticeController {
 	public String noticeWriteForm() {
 		return "notice/noticeWriteForm";
 	}
+	
+	//공지글 수정 페이지 요청 처리용
+	@RequestMapping("upmove.do")
+	public String noticeUpdateForm(@RequestParam("nid") int nid, Model model) {
+		Notice notice = noticeService.selectnotice(nid);
+		if(notice != null) {
+			model.addAttribute("notice", notice);
+			return "notice/noticeUpdateForm";
+		}else {
+			model.addAttribute("msg", nid + "번 공지 수정페이지로 이동 요청 실패.");
+			return "common/errorPage";
+		}
+	}
+	
 	
 	//파일업로드 기능이 있는 공지글 등록 요청 처리용
 	@RequestMapping(value="ninsert.do", method=RequestMethod.POST)
