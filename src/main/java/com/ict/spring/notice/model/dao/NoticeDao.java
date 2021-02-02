@@ -32,11 +32,11 @@ public class NoticeDao {
 	}
 	
 	public int updateNotice(Notice notice) {
-		return 0;
+		return sqlSession.update("noticeMapper.updateNotice", notice);
 	}
 	
 	public int deletenotice(int nid) {
-		return 0;
+		return sqlSession.delete("noticeMapper.deleteNotice", nid);
 	}
 	
 	//최근 공지글 몇개 조회

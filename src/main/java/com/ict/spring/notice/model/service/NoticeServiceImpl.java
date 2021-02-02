@@ -31,12 +31,12 @@ public class NoticeServiceImpl implements NoticeService {
 
 	@Override
 	public int updateNotice(Notice notice) {
-		return 0;
+		return noticeDao.updateNotice(notice);
 	}
 
 	@Override
 	public int deleteNotice(int nid) {
-		return 0;
+		return noticeDao.deletenotice(nid);
 	}
 
 	@Override

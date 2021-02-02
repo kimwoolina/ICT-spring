@@ -32,5 +32,23 @@
 		values (seq_nid.nextval, #{ntitle}, #{nwriter}, #{ncontent}, default, default )
 		</if>
 	</insert>
-		
+	
+	<update id="updateNotice">
+		update notice
+		set ntitle = #{ ntitle },
+			ncontent = #{ ncontent }
+			<if test="file_path != null">
+			, file_path = # {file_path}
+			</if>
+			<if test="file_path == null">
+			, file_path = null
+			</if>
+		where nid = #{nid}
+	</update>
+	
+	<delete id="deleteNotice" parameterType="_int">
+		delete from notice
+		where nid = #{ nid }
+	</delete>
+	
 </mapper>
