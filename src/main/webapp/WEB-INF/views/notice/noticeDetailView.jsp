@@ -23,7 +23,7 @@
 <td>
 	<c:if test="${ !empty notice.file_path }"> <%-- 첨부파일이 있다면 다운로드 설정함 --%>
 		<c:url var="unf" value="/nfdown.do">
-			<c:param name="file_path" value="notice.file_path"/>
+			<c:param name="file_path" value="${notice.file_path}"/>
 		</c:url>
 		<a href="${unf} }">${notice.file_path}</a>
 	</c:if>

@@ -19,6 +19,19 @@
 	<beans:bean class="org.springframework.web.servlet.view.InternalResourceViewResolver">
 		<beans:property name="prefix" value="/WEB-INF/views/" />
 		<beans:property name="suffix" value=".jsp" />
+		<beans:property name="order" value="1" />
+	</beans:bean>
+	
+	<!-- 파일 다운을 위한 뷰리졸버 지정 (JsonView도 해당됨) 
+		주의 : id 속성을 지정하지 않는다.
+		여러 개의 뷰리졸버를 지정할 때는 실행 순서를 정해야함
+		파일 다운 뷰리졸버가 반드시 맨 처음 실행되게 순서를 지정해야함
+		즉, 컨트롤러 메소드가 리턴하는 뷰이름과 동일한 뷰클래스(bean)가 있으면
+		자동으로 해당 뷰클래스(파일다운로드 처리용 뷰클래스)를 실행함
+	-->
+	<beans:bean
+		class="org.springframework.web.servlet.view.BeanNameViewResolver">
+		<beans:property name="order" value="0" />
 	</beans:bean>
 	
 	<context:component-scan base-package="com.ict.spring" />
@@ -34,5 +47,6 @@
 		<beans:bean id="LoginInterceptor" class="com.ict.spring.common.interceptor.LoginInterceptor" />
 	</interceptor>
 	</interceptors>
+	
 	
 </beans:beans>

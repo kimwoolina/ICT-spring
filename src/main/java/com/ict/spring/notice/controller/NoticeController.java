@@ -14,6 +14,7 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.multipart.MultipartFile;
+import org.springframework.web.servlet.ModelAndView;
 
 import com.ict.spring.notice.model.service.NoticeService;
 import com.ict.spring.notice.model.vo.Notice;
@@ -85,5 +86,23 @@ public class NoticeController {
 			model.addAttribute("msg","공지글 등록 실패.");
 			return "common/errorPage";
 		}
+	}
+	
+	//첨부파일 다운로드 요청 처리용
+	@RequestMapping("nfdown.do")
+	public ModelAndView fileDownMethod(HttpServletRequest request, @RequestParam("file_path") String fileName) {
+		String savePath = request.getSession().getServletContext().getRealPath("resources/notice_files");
+		File downFile = new File(savePath + "\\" + fileName);
+		
+		/* ModelAndView(String viewName, String modelName, Object modelObject)
+		 * Model 클래스 객체 = request + response
+		 * modelName == 이름, modelObject == 객체
+		 * request.setAttribute("이름","객체")와 같은 의미
+		 * */
+		
+		//스프링에서는 파일다운하려면, 스프링이 제공하는 View 클래스를 상속받은 
+		//파일다운처리용 뷰클래스를 별도로 작성하고, DispatcherServlet에
+		//파일다운로드용 뷰클래스를 실행시키는 뷰리졸버를 등록해야함
+		return new ModelAndView("filedown", "downFile", downFile);
 	}
 }
