@@ -17,7 +17,7 @@
 <hr>
 <h1 align="center">공지사항</h1>
 <br>
-<c:if test="${ !empty sessionScope.loginUser and sessionScope.loginUser.id eq 'admin' }">
+<c:if test="${ !empty sessionScope.loginUser and sessionScope.loginUser.id eq 'admin123' }">
 	<div style="align:center; padding-left:400px">
 	<c:url var="nwf" value="/nwform.do" />
 	<button onclick="javascript:location.href='${nwf}';">글쓰기</button>

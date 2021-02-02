@@ -54,7 +54,7 @@ public class NoticeController {
 			model.addAttribute("notice", notice);
 			//관리자가 상세보기 요청했을 떄
 			Member loginUser = (Member)session.getAttribute("loginUser");
-			if(loginUser != null && loginUser.getId().equals("admin")) {
+			if(loginUser != null && loginUser.getId().equals("admin123")) {
 				return "notice/";
 			}else {
 				//관리자가 아닌 고객이 상세보기 요청했을 때
