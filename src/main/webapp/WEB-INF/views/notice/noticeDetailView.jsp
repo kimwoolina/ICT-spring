@@ -25,7 +25,7 @@
 		<c:url var="unf" value="/nfdown.do">
 			<c:param name="file_path" value="${notice.file_path}"/>
 		</c:url>
-		<a href="${unf} }">${notice.file_path}</a>
+		<a href="${unf}">${notice.file_path}</a>
 	</c:if>
 	<c:if test="${empty notice.file_path }">&nbsp;</c:if>
 </td></tr>

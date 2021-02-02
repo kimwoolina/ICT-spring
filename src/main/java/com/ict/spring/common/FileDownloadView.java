@@ -37,7 +37,7 @@ public class FileDownloadView extends AbstractView{
 		//입출력 스트림 생성함
 		OutputStream out = response.getOutputStream();
 		
-		try(FileInputStream fin = new FileInputStream(downFile)){
+		try(FileInputStream fin = new FileInputStream(downFile);){
 			FileCopyUtils.copy(fin, out);
 		}catch(Exception e) {
 			e.printStackTrace();
