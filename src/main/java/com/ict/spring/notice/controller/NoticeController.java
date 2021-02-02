@@ -92,9 +92,10 @@ public class NoticeController {
 		String savePath = request.getSession().getServletContext().getRealPath("resources/notice_files");
 		
 		// 첨부파일이 있을 때만 업로드된 파일을 지정 폴더로 옮기기
-		if(mfile != null) {
+		String fileName = mfile.getOriginalFilename();
+		if(fileName != null && fileName.length() >0) {
 			try {
-				mfile.transferTo(new File(savePath + "\\" + mfile.getOriginalFilename()));
+				mfile.transferTo(new File(savePath + "\\" + fileName));
 			} catch (Exception e) {
 				e.printStackTrace();
 				model.addAttribute("msg", "전송 파일 저장 실패");
