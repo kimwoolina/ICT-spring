@@ -4,6 +4,7 @@ import java.io.File;
 import java.util.ArrayList;
 
 import javax.servlet.http.HttpServletRequest;
+import javax.servlet.http.HttpSession;
 
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -16,6 +17,7 @@ import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.multipart.MultipartFile;
 import org.springframework.web.servlet.ModelAndView;
 
+import com.ict.spring.member.model.vo.Member;
 import com.ict.spring.notice.model.service.NoticeService;
 import com.ict.spring.notice.model.vo.Notice;
 
@@ -44,12 +46,20 @@ public class NoticeController {
 	
 	//공지글 상세보기 요청 처리용
 	@RequestMapping("ndetail.do")
-	public String noticeDetailMethod(@RequestParam("nid") int nid, Model model) {
+	public String noticeDetailMethod(@RequestParam("nid") int nid, Model model,
+							HttpSession session) {
 		Notice notice = noticeService.selectnotice(nid);
 		
 		if(notice != null) {
 			model.addAttribute("notice", notice);
-			return "notice/noticeDetailView";
+			//관리자가 상세보기 요청했을 떄
+			Member loginUser = (Member)session.getAttribute("loginUser");
+			if(loginUser != null && loginUser.getId().equals("admin")) {
+				return "notice/";
+			}else {
+				//관리자가 아닌 고객이 상세보기 요청했을 때
+				return "notice/noticeDetailView";
+			}
 		}else {
 			model.addAttribute("msg", nid + "번 공지 상세보기 실패");
 			return "common/errorPage";
