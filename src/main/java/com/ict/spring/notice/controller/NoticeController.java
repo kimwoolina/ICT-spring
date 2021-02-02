@@ -145,8 +145,16 @@ public class NoticeController {
    //공지글 삭제 요청 처리용
    //삭제하면 목록보기로 가야되서 return type : string
    @RequestMapping("ndel.do")
-   public String noticeDeleteMethod(@RequestParam("nid") int nid, Model model) {
+   public String noticeDeleteMethod(@RequestParam("nid") int nid, 
+		   	@RequestParam(name="file_path", required = false) String fileName, 
+		   	HttpServletRequest request,
+		   	Model model) {
       if(noticeService.deleteNotice(nid) > 0) {
+    	 //첨부파일이 있는 글일 때, 저장폴더에 있는 파일도 삭제함
+    	  if(fileName != null) {
+    		  new File(request.getSession().getServletContext()
+    				  .getRealPath("resources/notice_files") + "\\" + fileName).delete();
+    	  }
          return "redirect:nlist.do";
       }else {
          model.addAttribute("msg", "번 공지글 삭제 실패");

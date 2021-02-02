@@ -39,6 +39,9 @@
 <%-- 삭제하기 버튼 --%>
 <c:url var="ndel" value="/ndel.do">
 	<c:param name="nid" value="${ notice.nid }"/>
+	<c:if test="${ !empty notice.file_path }">
+		<c:param name="file_path" value="${ notice.file_path }"/>
+	</c:if>
 </c:url>
 <button onclick="javascript:location.href='${ ndel }';">글삭제</button>&nbsp;
 <%-- 이전페이지로 이동 --%>
