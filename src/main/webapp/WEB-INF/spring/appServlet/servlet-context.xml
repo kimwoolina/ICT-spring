@@ -33,6 +33,12 @@
 		<beans:property name="order" value="0" />
 	</beans:bean>
 	
+	<!-- 컨트롤러 메소드가 리턴한 json 객체 출력용 뷰 클래스를 등록함  :
+		maven dependency로 다운받은 라이브러리가 제공함 -->
+	<beans:bean class="net.sf.json.spring.web.servlet.view.JsonView"
+		lazy-init="false" id="jsonView">
+	</beans:bean>
+	
 	<context:component-scan base-package="com.ict.spring" />
 	
 	<!-- interceptor 등록 -->
@@ -46,6 +52,5 @@
 		<beans:bean id="LoginInterceptor" class="com.ict.spring.common.interceptor.LoginInterceptor" />
 	</interceptor>
 	</interceptors>
-	
 	
 </beans:beans>
