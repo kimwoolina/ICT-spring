@@ -21,7 +21,7 @@
 	 		/WEB-INF/spring/root-context.xml
 	 	    /WEB-INF/spring/spring-security.xml
 	 	</param-value> 
-	    <!-- 1. root-context.xml을 소스폴더 최상위패스("src/main/resoures/" => classpath) -->
+	    <!-- 1. root-context.xml을 소스폴더 최상위패스("src/main/resources/" => classpath) -->
 	    <!--   <param-value>
 	           	classpath:root-context.xml
 	           </param-value> 

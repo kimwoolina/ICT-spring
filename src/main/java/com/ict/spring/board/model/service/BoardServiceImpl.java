@@ -7,69 +7,57 @@ import org.springframework.stereotype.Service;
 
 import com.ict.spring.board.model.dao.BoardDao;
 import com.ict.spring.board.model.vo.Board;
-import com.ict.spring.board.model.vo.PageInfo;
-import com.ict.spring.board.model.vo.Reply;
 
-@Service("bSerivce")
-public class BoardServiceImpl implements BoardService{
+@Service("boardService")
+public class BoardServiceImpl implements BoardService {
+   @Autowired //의존성 어노테이션 
+   private BoardDao boardDao;
+   
+   @Override
+   public ArrayList<Board> selectTop3() {
+      return boardDao.selectTop3();
+   }
 
-	@Autowired
-	private BoardDao bDao;
+   @Override
+   public int getListCount() {
+      // TODO Auto-generated method stub
+      return 0;
+   }
 
-	@Override
-	public int getListCount() {
-		return bDao.getListCount();
-	}
+   @Override
+   public ArrayList<Board> selectList(int currentPage, int limit) {
+      // TODO Auto-generated method stub
+      return null;
+   }
 
-	@Override
-	public ArrayList<Board> selectList(PageInfo pi) {
-		return bDao.selectList(pi);
-	}
+   @Override
+   public Board selectBoard(int bid) {
+      // TODO Auto-generated method stub
+      return null;
+   }
 
-	@Override
-	public int insertBoard(Board b) {
-		return bDao.insertBoard(b);
-	}
+   @Override
+   public int addReadCount(int bid) {
+      // TODO Auto-generated method stub
+      return 0;
+   }
 
-	@Override
-	public Board selectBoard(int bId) {
-		int result = bDao.updateCount(bId);
-		
-		if(result > 0) {
-			return bDao.selectBoard(bId);
-		}else {
-			return null;
-		}
-	}
+   @Override
+   public int insertBoard(Board board) {
+      // TODO Auto-generated method stub
+      return 0;
+   }
 
-	@Override
-	public Board selectUpdateBoard(int bId) {
-		return bDao.selectBoard(bId);
-	}
+   @Override
+   public int updateBoard(Board board) {
+      // TODO Auto-generated method stub
+      return 0;
+   }
 
-	@Override
-	public int updateBoard(Board b) {
-		return bDao.updateBoard(b);
-	}
-
-	@Override
-	public int deleteBoard(int bId) {
-		return bDao.deleteBoard(bId);
-	}
-
-	@Override
-	public ArrayList<Board> selectTopList() {
-		return bDao.selectTopList();
-	}
-
-	@Override
-	public ArrayList<Reply> selectReplyList(int bId) {
-		return bDao.selectReplyList(bId);
-	}
-
-	@Override
-	public int insertReply(Reply r) {
-		return bDao.insertReply(r);
-	}
+   @Override
+   public int deleteBoard(int bid) {
+      // TODO Auto-generated method stub
+      return 0;
+   }
 
 }

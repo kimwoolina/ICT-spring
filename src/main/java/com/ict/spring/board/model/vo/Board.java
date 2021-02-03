@@ -3,120 +3,122 @@ package com.ict.spring.board.model.vo;
 import java.sql.Date;
 
 public class Board {
-	private int bId;
-	private String bTitle;
-	private String bWriter;
-	private String bContent;
-	private String originalFileName;
-	private String renameFileName;
-	private int bCount;
-	private Date bCreateDate;
-	private Date bModifyDate;
-	private String bStatus;
+	private final static long serialVersionUID = 3333L;
+	
+	private int bid;
+	private String btitle;
+	private String bwriter;
+	private String bcontent;
+	private String original_filename;
+	private String rename_filename;
+	private int bcount;
+	private Date b_create_date;
+	private Date b_modify_date;
+	private String b_status;
 	
 	public Board() {}
 
-	public Board(int bId, String bTitle, String bWriter, String bContent, String originalFileName,
-			String renameFileName, int bCount, Date bCreateDate, Date bModifyDate, String bStatus) {
+	public Board(int bid, String btitle, String bwriter, String bcontent, String original_filename,
+			String rename_filename, int bcount, Date b_create_date, Date b_modify_date, String b_status) {
 		super();
-		this.bId = bId;
-		this.bTitle = bTitle;
-		this.bWriter = bWriter;
-		this.bContent = bContent;
-		this.originalFileName = originalFileName;
-		this.renameFileName = renameFileName;
-		this.bCount = bCount;
-		this.bCreateDate = bCreateDate;
-		this.bModifyDate = bModifyDate;
-		this.bStatus = bStatus;
+		this.bid = bid;
+		this.btitle = btitle;
+		this.bwriter = bwriter;
+		this.bcontent = bcontent;
+		this.original_filename = original_filename;
+		this.rename_filename = rename_filename;
+		this.bcount = bcount;
+		this.b_create_date = b_create_date;
+		this.b_modify_date = b_modify_date;
+		this.b_status = b_status;
 	}
 
-	public int getbId() {
-		return bId;
+	public int getBid() {
+		return bid;
 	}
 
-	public void setbId(int bId) {
-		this.bId = bId;
+	public void setBid(int bid) {
+		this.bid = bid;
 	}
 
-	public String getbTitle() {
-		return bTitle;
+	public String getBtitle() {
+		return btitle;
 	}
 
-	public void setbTitle(String bTitle) {
-		this.bTitle = bTitle;
+	public void setBtitle(String btitle) {
+		this.btitle = btitle;
 	}
 
-	public String getbWriter() {
-		return bWriter;
+	public String getBwriter() {
+		return bwriter;
 	}
 
-	public void setbWriter(String bWriter) {
-		this.bWriter = bWriter;
+	public void setBwriter(String bwriter) {
+		this.bwriter = bwriter;
 	}
 
-	public String getbContent() {
-		return bContent;
+	public String getBcontent() {
+		return bcontent;
 	}
 
-	public void setbContent(String bContent) {
-		this.bContent = bContent;
+	public void setBcontent(String bcontent) {
+		this.bcontent = bcontent;
 	}
 
-	public String getOriginalFileName() {
-		return originalFileName;
+	public String getOriginal_filename() {
+		return original_filename;
 	}
 
-	public void setOriginalFileName(String originalFileName) {
-		this.originalFileName = originalFileName;
+	public void setOriginal_filename(String original_filename) {
+		this.original_filename = original_filename;
 	}
 
-	public String getRenameFileName() {
-		return renameFileName;
+	public String getRename_filename() {
+		return rename_filename;
 	}
 
-	public void setRenameFileName(String renameFileName) {
-		this.renameFileName = renameFileName;
+	public void setRename_filename(String rename_filename) {
+		this.rename_filename = rename_filename;
 	}
 
-	public int getbCount() {
-		return bCount;
+	public int getBcount() {
+		return bcount;
 	}
 
-	public void setbCount(int bCount) {
-		this.bCount = bCount;
+	public void setBcount(int bcount) {
+		this.bcount = bcount;
 	}
 
-	public Date getbCreateDate() {
-		return bCreateDate;
+	public Date getB_create_date() {
+		return b_create_date;
 	}
 
-	public void setbCreateDate(Date bCreateDate) {
-		this.bCreateDate = bCreateDate;
+	public void setB_create_date(Date b_create_date) {
+		this.b_create_date = b_create_date;
 	}
 
-	public Date getbModifyDate() {
-		return bModifyDate;
+	public Date getB_modify_date() {
+		return b_modify_date;
 	}
 
-	public void setbModifyDate(Date bModifyDate) {
-		this.bModifyDate = bModifyDate;
+	public void setB_modify_date(Date b_modify_date) {
+		this.b_modify_date = b_modify_date;
 	}
 
-	public String getbStatus() {
-		return bStatus;
+	public String getB_status() {
+		return b_status;
 	}
 
-	public void setbStatus(String bStatus) {
-		this.bStatus = bStatus;
+	public void setB_status(String b_status) {
+		this.b_status = b_status;
 	}
 
 	@Override
 	public String toString() {
-		return "Board [bId=" + bId + ", bTitle=" + bTitle + ", bWriter=" + bWriter + ", bContent=" + bContent
-				+ ", originalFileName=" + originalFileName + ", renameFileName=" + renameFileName + ", bCount=" + bCount
-				+ ", bCreateDate=" + bCreateDate + ", bModifyDate=" + bModifyDate + ", bStatus=" + bStatus + "]";
+		return "Board [bid=" + bid + ", btitle=" + btitle + ", bwriter=" + bwriter + ", bcontent=" + bcontent
+				+ ", original_filename=" + original_filename + ", rename_filename=" + rename_filename + ", bcount="
+				+ bcount + ", b_create_date=" + b_create_date + ", b_modify_date=" + b_modify_date + ", b_status="
+				+ b_status + "]";
 	}
-	
-	
+
 }

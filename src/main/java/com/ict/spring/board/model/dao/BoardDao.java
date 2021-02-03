@@ -1,63 +1,57 @@
 package com.ict.spring.board.model.dao;
 
 import java.util.ArrayList;
+import java.util.List;
 
-import org.apache.ibatis.session.RowBounds;
 import org.mybatis.spring.SqlSessionTemplate;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Repository;
 
 import com.ict.spring.board.model.vo.Board;
-import com.ict.spring.board.model.vo.PageInfo;
-import com.ict.spring.board.model.vo.Reply;
 
-@Repository("bDao")
+@Repository("boardDao")
 public class BoardDao {
-	
 	@Autowired
-    private SqlSessionTemplate sqlSession;
+	private SqlSessionTemplate sqlSession;
 
-    public int getListCount() {
-	return sqlSession.selectOne("boardMapper.getListCount");
-    }
+	public ArrayList<Board> selectTop3() {
+		List<Board> list = sqlSession.selectList("boardMapper.selectTop3");
+		return (ArrayList<Board>)list;
+	}
 
-    public ArrayList<Board> selectList(PageInfo pi) {
+	public int getListCount() {
+		// TODO Auto-generated method stub
+		return 0;
+	}
 
-	int offset = (pi.getCurrentPage() - 1) * pi.getBoardLimit();
-	RowBounds rowBounds = new RowBounds(offset, pi.getBoardLimit());
+	public ArrayList<Board> selectList(int currentPage, int limit) {
+		// TODO Auto-generated method stub
+		return null;
+	}
 
-	return (ArrayList) sqlSession.selectList("boardMapper.selectList", null, rowBounds);
-    }
+	public Board selectBoard(int bid) {
+		// TODO Auto-generated method stub
+		return null;
+	}
 
-    public int insertBoard(Board b) {
-	return sqlSession.insert("boardMapper.insertBoard", b);
-    }
+	public int addReadCount(int bid) {
+		// TODO Auto-generated method stub
+		return 0;
+	}
 
-    public int updateCount(int bId) {
-	return sqlSession.update("boardMapper.updateCount", bId);
-    }
+	public int insertBoard(Board board) {
+		// TODO Auto-generated method stub
+		return 0;
+	}
 
-    public Board selectBoard(int bId) {
-	return sqlSession.selectOne("boardMapper.selectBoard", bId);
-    }
+	public int updateBoard(Board board) {
+		// TODO Auto-generated method stub
+		return 0;
+	}
 
-    public int updateBoard(Board b) {
-	return sqlSession.update("boardMapper.updateBoard", b);
-    }
+	public int deleteBoard(int bid) {
+		// TODO Auto-generated method stub
+		return 0;
+	}
 
-    public int deleteBoard(int bId) {
-	return sqlSession.update("boardMapper.deleteBoard", bId);
-    }
-
-    public ArrayList<Board> selectTopList() {
-	return (ArrayList) sqlSession.selectList("boardMapper.selectTopList");
-    }
-
-    public ArrayList<Reply> selectReplyList(int bId) {
-	return (ArrayList) sqlSession.selectList("boardMapper.selectReplyList", bId);
-    }
-
-    public int insertReply(Reply r) {
-	return sqlSession.insert("boardMapper.insertReply", r);
-    }
 }
