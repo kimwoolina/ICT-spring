@@ -20,14 +20,12 @@ public class BoardServiceImpl implements BoardService {
 
    @Override
    public int getListCount() {
-      // TODO Auto-generated method stub
-      return 0;
+      return boardDao.getListCount();
    }
 
    @Override
    public ArrayList<Board> selectList(int currentPage, int limit) {
-      // TODO Auto-generated method stub
-      return null;
+      return boardDao.selectList(currentPage, limit);
    }
 
    @Override

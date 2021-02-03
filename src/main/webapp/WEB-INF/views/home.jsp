@@ -96,7 +96,7 @@
          </table>
       </div>
       <%-- 인기 게시글 3개 자동 조회 출력 : ajax 사용 --%>
-      <div style="border: 1px solid navy; padding: 5px; margin: 5px;">
+      <div style="float: left; border: 1px solid navy; padding: 5px; margin: 5px;">
          <h4>인기 게시글</h4>
          <table id="top_board" border="1" cellspacing="0">
             <tr><th>번호</th><th>제목</th><th>조회수</th>

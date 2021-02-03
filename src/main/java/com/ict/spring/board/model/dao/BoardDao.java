@@ -8,6 +8,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Repository;
 
 import com.ict.spring.board.model.vo.Board;
+import com.ict.spring.board.model.vo.BoardPage;
 
 @Repository("boardDao")
 public class BoardDao {
@@ -20,11 +21,16 @@ public class BoardDao {
 	}
 
 	public int getListCount() {
-		return 0;
+		return sqlSession.selectOne("boardMapper.getListCount");
 	}
 
 	public ArrayList<Board> selectList(int currentPage, int limit) {
-		return null;
+		//전달된 값을 이용해서 출력할 시작행과 끝행을 계산함
+		int startRow = (currentPage - 1) * limit -1;
+		int endRow = startRow + limit - 1;
+		
+		List<Board> list = sqlSession.selectList("boardMapper.selectList", new BoardPage(startRow, endRow));
+		return (ArrayList<Board>)list;
 	}
 
 	public Board selectBoard(int bid) {
@@ -36,17 +42,14 @@ public class BoardDao {
 	}
 
 	public int insertBoard(Board board) {
-		// TODO Auto-generated method stub
 		return 0;
 	}
 
 	public int updateBoard(Board board) {
-		// TODO Auto-generated method stub
 		return 0;
 	}
 
 	public int deleteBoard(int bid) {
-		// TODO Auto-generated method stub
 		return 0;
 	}
 

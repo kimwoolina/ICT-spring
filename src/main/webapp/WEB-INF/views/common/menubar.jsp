@@ -73,7 +73,9 @@
 	</div>
 	
 	<c:url var="nlist" value="nlist.do"/>
-	<c:url var="blist" value="blist.do"/>
+	<c:url var="blist" value="blist.do">
+		<c:param name="page" value="1" />
+	</c:url>
 	<div class="menubar">
 		<div class="nav">
 			<div class="menu"><a href="home.do">HOME</a></div>
