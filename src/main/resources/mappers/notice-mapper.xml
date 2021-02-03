@@ -12,6 +12,12 @@
       <result property="file_path" column="FILE_PATH"/>
    </resultMap>
    
+   <resultMap id="noticeTop3ResultSet" type="Notice">
+      <id property="nid" column="NID"/>
+      <result property="ntitle" column="NTITLE"/>
+      <result property="n_create_date" column="N_CREATE_DATE"/>
+   </resultMap>
+   
    <select id="selectAll" resultMap="noticeResultSet">
       select * from notice
       order by nid desc
@@ -20,6 +26,16 @@
    <select id="selectNotice" parameterType="_int" resultMap="noticeResultSet">
       select * from notice
       where nid = #{nid}
+   </select>
+   
+   <select id="selectNewTop3" resultMap="noticeTop3ResultSet">
+   		<![CDATA[
+   		select *
+   		from (select rownum rnum, nid,ntitle, n_create_Date
+   			from (select * from notice 
+   				  order by nid desc))
+   		where rnum >= 1 and rnum <= 3
+   		]]>
    </select>
    
    <insert id="insertNotice" parameterType="Notice">

@@ -41,7 +41,8 @@ public class NoticeDao {
 	
 	//최근 공지글 몇개 조회
 	public ArrayList<Notice> selectNewTop3(){
-		return null;
+		List<Notice> list = sqlSession.selectList("noticeMapper.selectNewTop3");
+		return (ArrayList<Notice>)list;
 	}
 	
 }

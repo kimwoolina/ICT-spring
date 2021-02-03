@@ -41,7 +41,7 @@ public class NoticeServiceImpl implements NoticeService {
 
 	@Override
 	public ArrayList<Notice> selectNewTop3() {
-		return null;
+		return noticeDao.selectNewTop3();
 	}
 
 }
