@@ -42,7 +42,7 @@
 	<context:component-scan base-package="com.ict.spring" />
 	
 	<!-- interceptor 등록 -->
-	<!-- <interceptors>
+	<interceptors>
 		<interceptor>
 			<mapping path="/blist.do"/>
 			<beans:bean id="BlistInterceptor" class="com.ict.spring.common.interceptor.BlistInterceptor"/>
@@ -51,6 +51,6 @@
 		<mapping path="/login.do"/>
 		<beans:bean id="LoginInterceptor" class="com.ict.spring.common.interceptor.LoginInterceptor" />
 	</interceptor>
-	</interceptors> -->
+	</interceptors>
 	
 </beans:beans>

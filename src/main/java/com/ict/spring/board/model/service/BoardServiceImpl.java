@@ -32,14 +32,12 @@ public class BoardServiceImpl implements BoardService {
 
    @Override
    public Board selectBoard(int bid) {
-      // TODO Auto-generated method stub
-      return null;
+      return boardDao.selectBoard(bid);
    }
 
    @Override
    public int addReadCount(int bid) {
-      // TODO Auto-generated method stub
-      return 0;
+      return boardDao.addReadCount(bid);
    }
 
    @Override

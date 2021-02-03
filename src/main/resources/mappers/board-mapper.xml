@@ -2,6 +2,19 @@
 <!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
 <mapper namespace="boardMapper">
 	
+	<resultMap type="Board" id="resultBoard">
+		<id column="bid" property="bid"/>
+		<result column="btitle" property="btitle" />
+		<result column="bwriter" property="bwriter"/>
+		<result column="bcontent" property="bcontent"/>
+		<result column="original_filename" property="original_filename"/>
+		<result column="rename_filename" property="rename_filename"/>
+		<result column="bcount" property="bcount" />
+		<result column="b_create_date" property="b_create_date"/>
+		<result column="b_modify_date" property="b_modify_date"/>
+		<result column="b_status" property="b_status"/>
+	</resultMap>
+		
 	<resultMap type="Board" id="resultTop3">
 		<id column="bid" property="bid"/>
 		<result column="btitle" property="btitle" />
@@ -24,4 +37,15 @@
 	]]>
 	</select>
 
+	<select id="selectBoard" parameterType="_int" resultMap="resultBoard">
+		select * from board
+		where bid = #{ bid }
+	</select>
+	
+	<update id="updateBCount" parameterType="_int">
+		update board
+		set bcount = bcount + 1
+		where bid = #{ bid }
+	</update>
+	
 </mapper>
