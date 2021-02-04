@@ -198,7 +198,7 @@ public class NoticeController {
 		}
 	}
 
-//  공지글 수정 요청 처리용
+	//  공지글 수정 요청 처리용
 	@RequestMapping(value = "nupdate.do", method = RequestMethod.POST)
 	public String noticeUpdateMethod(Notice notice, HttpServletRequest request, Model model,
 			@RequestParam(name = "delFlag", required = false) String delFlag,

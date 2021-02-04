@@ -54,9 +54,6 @@
 			<a href="${ buv }">[수정페이지로 이동]</a> &nbsp; &nbsp; 
 			<c:url var="bdl" value="/bdelete.do">
 				<c:param name="bid" value="${ board.bid }" />
-				<c:if test="${ !empty board.original_filename }">
-					<c:param name="rfile" value="${ board.rename_filename }" />
-				</c:if>
 			</c:url>
 			<a href="${ bdl }">[글삭제]</a>&nbsp; &nbsp; 
 		</c:if>
