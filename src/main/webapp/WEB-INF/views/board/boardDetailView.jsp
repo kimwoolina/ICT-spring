@@ -12,6 +12,20 @@
 <head>
 <meta charset="UTF-8">
 <title>Insert title here</title>
+<script type="text/javascript" src="${ pageContext.request.contextPath }/resources/js/jquery-3.5.1.min.js"></script>
+<script type="text/javascript">
+$(function(){
+	hideReplyForm(); //뷰 페이지 처음 실행 시에는  댓글달기 폼이 안보이게 함
+});
+
+function showReplyForm(){
+	$("#replyDiv").css("display", "block");	
+}
+
+function hideReplyForm(){
+	$("#replyDiv").css("display", "none");
+}
+</script>
 </head>
 <body>
 	<<%-- 상대경로만 사용 가능함 --%>
@@ -43,7 +57,7 @@
 		<tr align="center" valign="middle"><th colspan="2">
 		<%-- 로그인한 상태일 때 댓글달기 사용하게 함 --%>
 		<c:if test="${ !empty sessionScope.loginUser}">
-			<button>[댓글달기] </button> &nbsp; &nbsp; 
+			<button onclick="showReplyForm();">댓글달기 </button> &nbsp; &nbsp; 
 		</c:if>
 		<%-- 로그인한 상태이면서, 본인 글일때만 보여지게 함  --%>
 		<c:if test="${ !empty loginUser and loginUser.id eq board.bwriter }">
@@ -63,6 +77,23 @@
 		<a href="${ bls }">[목록]</a>
 		</th></tr>
 	</table>
+<%-- 댓글목록 표시 영역 --%>
+
+<hr>
+<%-- 댓글달기 폼 영역 --%>
+<div id="replyDiv">
+<form action="rinsert.do" method="post">
+<input type="hidden" name="ref_bid" value="${ board.bid }">
+<table align="center" width="500" border="1" cellspacing="0" cellpadding="5">
+<tr><th>작성자</th><td><input type="text" name="rwriter" readonly value="${ sessionScope.loginUser.id }"></td></tr>
+<tr><th>내 용</th><td><textarea name="rcontent" rows="5" cols="50"></textarea></td></tr>
+<tr><th colspan="2">
+<input type="submit" value="댓글등록"> &nbsp;
+<input type="reset"value="댓글취소" onclick="hideReplyForm(); return false;">
+</th></tr>
+</table>
+</form>
+</div>
 
 </body>
 </html>

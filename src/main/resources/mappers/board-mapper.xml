@@ -83,7 +83,8 @@
 	<update id="updateBoard" parameterType="Board">
 		update board
 		set btitle = #{ btitle },
-			bcontent = #{ bcontent }
+			bcontent = #{ bcontent },
+			b_modify_date = sysdate
 			<if test="original_filename == null">
 			, original_filename = null,
 			rename_filename = null
@@ -97,7 +98,8 @@
 	
 	<update id="changeBstatusN" parameterType="_int">
 		update board
-		set b_status = 'N'
+		set b_status = 'N',
+			b_modify_date = sysdate
 		where bid = #{ bid }
 	</update>
 

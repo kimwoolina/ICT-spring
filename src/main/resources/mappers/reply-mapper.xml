@@ -1,0 +1,50 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="replyMapper">
+
+	<resultMap type="Reply" id="resultReply">
+		<id column="rid" property="rid" />
+		<result column="rwriter" property="rwriter" />
+		<result column="ref_bid" property="ref_bid"/>
+		<result column="rcontent" property="rcontent" />
+		<result column="r_create_date" property="r_create_date" />
+		<result column="r_modify_date" property="r_modify_date" />
+		<result column="r_status" property="r_status" />
+	</resultMap>
+
+	<select id="selectReply" parameterType="_int" resultMap="resultReply">
+		select * from reply
+		where rid = #{ rid }
+	</select>
+
+	<select id="selectList" parameterType="_int" resultMap="resultReply">
+		select * from reply
+		where r_status = 'Y' and ref_bid = #{ ref_bid } 
+		order by rid asc
+	</select>
+	
+	<insert id="insertReply" parameterType="Reply">
+		insert into reply
+		values (seq_bid.nextval, #{ rcontent }, #{ ref_bid }, 
+				#{ rwriter }, sysdate, sysdate, default)
+	</insert>
+	
+	<update id="updateReply" parameterType="Reply">
+		update reply
+		set rcontent = #{ rcontent },
+			r_modify_date = sysdate
+		where rid = #{ rid }
+	</update>
+	
+	<update id="changeBstatusN" parameterType="_int">
+		update reply
+		set r_status = 'N',
+			r_modify_date = sysdate
+		where rid = #{ rid }
+	</update>
+
+	<delete id="deleteReply" parameterType="_int">
+		delete from reply
+		where rid = #{rid}
+	</delete>
+</mapper>
