@@ -20,6 +20,7 @@ import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.multipart.MultipartFile;
+import org.springframework.web.servlet.ModelAndView;
 
 import com.ict.spring.board.model.service.BoardService;
 import com.ict.spring.board.model.vo.Board;
@@ -235,6 +236,23 @@ public class BoardController {
 			return "common/errorPage";
 		}
 	}
+	
+	//게시글 첨부파일 다운로드 요청 처리용
+	@RequestMapping("bfdown.do")
+	public ModelAndView fileDownMethod(
+			@RequestParam("ofile") String originalFilename,
+			@RequestParam("rfile") String renameFilename, 
+			HttpServletRequest request, Model model) {
+		
+		String savePath = request.getSession().getServletContext().getRealPath("resources/board_files");
+		File renameFile = new File(savePath + "\\" + renameFilename);
+		
+		model.addAttribute("renameFile", renameFile);
+		model.addAttribute("originalFilename", originalFilename);
+		return new ModelAndView("filedown2", "downFile", model);
+	}
+	
+	
 }
 
 //package com.ict.spring.board.controller;

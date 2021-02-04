@@ -37,7 +37,7 @@
 				<c:param name="ofile" value="${ board.original_filename }" />
 				<c:param name="rfile" value="${ board.rename_filename }"/>
 			</c:url>
-			<a href="${ bdf }">${ board.original_filename }</a>
+			<a href="${ bfd }">${ board.original_filename }</a>
 			</c:if>
 			</td></tr>
 		<tr align="center" valign="middle"><th colspan="2">
