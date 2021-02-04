@@ -9,5 +9,5 @@ public interface ReplyService {
 	int updateReply(Reply reply);
 	int deleteReply(int rid);
 	Reply selectReply(int rid);
-	ArrayList<Reply> selectList();
+	ArrayList<Reply> selectList(int ref_bid);
 }

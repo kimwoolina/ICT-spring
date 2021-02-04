@@ -2,36 +2,41 @@ package com.ict.spring.board.model.service;
 
 import java.util.ArrayList;
 
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import com.ict.spring.board.model.vo.Reply;
+import com.ict.spring.board.model.vo.ReplyDao;
 
 @Service("replyService")
 public class ReplyServiceImpl implements ReplyService {
 
+	@Autowired
+	private ReplyDao replyDao;
+	
 	@Override
 	public int insertReply(Reply reply) {
-		return 0;
+		return replyDao.insertReply(reply);
 	}
 
 	@Override
 	public int updateReply(Reply reply) {
-		return 0;
+		return replyDao.updateReply(reply);
 	}
 
 	@Override
 	public int deleteReply(int rid) {
-		return 0;
+		return replyDao.deleteReply(rid);
 	}
 
 	@Override
 	public Reply selectReply(int rid) {
-		return null;
+		return replyDao.selectReply(rid);
 	}
 
 	@Override
-	public ArrayList<Reply> selectList() {
-		return null;
+	public ArrayList<Reply> selectList(int ref_bid) {
+		return replyDao.selectList(ref_bid);
 	}
 
 }
