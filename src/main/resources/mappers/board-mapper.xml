@@ -65,5 +65,40 @@
       	WHERE RNUM >=#{ startRow } AND RNUM <= #{ endRow }
       	]]>
 	</select>
+	
+	<insert id="insertBoard" parameterType="Board">
+		insert into board
+		<if test="original_filename != null"><!-- 첨부파일이 있을 때 -->
+		values (seq_bid.nextval, #{ btitle }, #{ bwriter }, #{ bcontent },
+		 		#{ original_filename }, #{ rename_filename }, 
+		 		default, sysdate, sysdate, default)
+		</if>
+		<if test="original_filename == null"><!-- 첨부파일이 없을 때 -->
+		values (seq_bid.nextval, #{ btitle }, #{ bwriter }, #{ bcontent },
+		 		null, null, 
+		 		default, sysdate, sysdate, default)
+		</if>
+	</insert>
+	
+	<update id="updateBoard" parameterType="Board">
+		update board
+		set btitle = #{ btitle },
+			bcontent = #{ bcontent }
+			<if test="original_filename == null">
+			, original_filename = null,
+			rename_filename = null
+			</if>
+			<if test="original_filename != null">
+			, original_filename = #{ original_filename },
+			rename_filename = #{ rename_filename }
+			</if>
+		where bid = #{ bid }
+	</update>
+	
+	<update id="changeBstatusN" parameterType="_int">
+		update board
+		set b_status = 'N'
+		where bid = #{ bid }
+	</update>
 
 </mapper>

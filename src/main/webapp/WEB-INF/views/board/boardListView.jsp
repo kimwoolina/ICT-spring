@@ -10,16 +10,13 @@
 <c:set var="currentPage" value="${ requestScope.currentPage }" />
 
 <%--글쓰기 페이지 이동 요청 url --%>
-<c:url var="bwf" value="/bwmove.do">
-	<c:param name="page" value="${ currentPage }" />
-</c:url>
+<c:url var="bwf" value="/bwmove.do" />
 <!DOCTYPE html>
 <html>
 <head>
 <meta charset="UTF-8">
 <title>first</title>
 <script type="text/javascript">
-
 function showWriteForm(){
    location.href = "${ bwf }";
 }

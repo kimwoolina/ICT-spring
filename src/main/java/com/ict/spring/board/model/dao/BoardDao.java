@@ -42,15 +42,15 @@ public class BoardDao {
 	}
 
 	public int insertBoard(Board board) {
-		return 0;
+		return sqlSession.insert("boardMapper.insertBoard", board);
 	}
 
 	public int updateBoard(Board board) {
-		return 0;
+		return sqlSession.update("boardMapper.updateBoard", board);
 	}
 
 	public int deleteBoard(int bid) {
-		return 0;
+		return sqlSession.update("boardMapper.changeBstatusN", bid);
 	}
 
 }

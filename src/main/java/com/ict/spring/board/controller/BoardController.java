@@ -1,9 +1,12 @@
 package com.ict.spring.board.controller;
 
+import java.io.File;
 import java.io.UnsupportedEncodingException;
 import java.net.URLEncoder;
+import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 
+import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
 import org.json.simple.JSONArray;
@@ -15,99 +18,144 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
+import org.springframework.web.multipart.MultipartFile;
 
 import com.ict.spring.board.model.service.BoardService;
 import com.ict.spring.board.model.vo.Board;
+import com.ict.spring.notice.model.vo.Notice;
 
 @Controller
 public class BoardController {
-   @Autowired
-   private BoardService boardService;
-   
-   //ajax 로 인기 게시글 조회 처리용
-      @RequestMapping(value="btop3.do", method=RequestMethod.POST)
-      @ResponseBody
-      public String selectTop3Method(HttpServletResponse response) throws UnsupportedEncodingException   {
-         //최신 공지글 3개 조회해 옴
-         ArrayList<Board> list = boardService.selectTop3(); //결과를 받아줌
-         
-         // 전송용 json 객체 준비
-         JSONObject sendJson = new JSONObject();
-         // list 옮길 json 배열 준비
-         JSONArray jarr = new JSONArray();
-         
-         // list 를 jarr 로 옮기기(복사)
-         for(Board board : list) {
-            //notice 필드값 저장할 json 객체 생성
-            JSONObject job = new JSONObject();
-            
-            job.put("bid", board.getBid());   //map이랑 같다
-            job.put("btitle", URLEncoder.encode(board.getBtitle(), "utf-8"));   //인코딩 해서 제이슨 객체 안에 담는다
-            job.put("bcount", board.getBcount());   
-            //날짜형식의 데이터를 json객체에 담을 때 주의사항, 뷰쪽에서 꺼낼 때 에러가나서, string형으로 바꿔서 json에 담아줘야한다.
-            
-            // job 를 jarr 에 저장
-            jarr.add(job);   
-         }
-         
-         // 전송용 json 객체에 jarr 담음
-         sendJson.put("list", jarr);
-         
-         return sendJson.toJSONString();   //jsonView 가 리턴됨
-         
-      }
-     
-   //게시글 상세보기 요청 처리용
-   @RequestMapping("bdetail.do")
-   public String boardDetailViewMethod(@RequestParam("bid") int bid,
-		   @RequestParam(name="page", required=false, defaultValue = "1") int currentPage, 
-		   Model model) {
-	   Board board = boardService.selectBoard(bid);
-	   int result = boardService.addReadCount(bid); //조회수 1증가 처리
-	   
-	   if(board != null && result > 0) {
-		   model.addAttribute("page", currentPage);
-		   model.addAttribute("board", board);
-		   return "board/boardDetailView";
-	   }else {
-		   model.addAttribute("msg", bid + "번 게시글 조회 실패");
-		   return "common/erroPage";
-	   }
-	   
-    }
-   
-   //게시글 페이지별 목록 조회 요청 처리용
-   @RequestMapping("blist.do")
-   public String boardListMethod(@RequestParam("page") int currentPage, 
-		   Model model) {
-	   int limit = 10;
-	   ArrayList<Board> list = boardService.selectList(currentPage, limit);
-	 
-	   //페이지 처리와 관련된 값 처리
-	   //총 페이지 계산을 위한 총 목록 갯수 조회
-	   int listCount = boardService.getListCount();
-	   int maxPage = (int)((double)listCount / limit + 0.9);
-	   //현재 페이지가 속한 페이지그룹의 시작페이지 값 설정
-	   //예 : 현재 페이지가 35이면, 시작페이지를 31로 지정(페이지 갯수를 10개 표시할 경우)
-	   int startPage = ((int)(double)currentPage / 10) * 10 + 1;
-	   int endPage = startPage + 9;
-	   
-	   if(maxPage < endPage)
-		   endPage = maxPage;
-	   
-	   if(list.size() > 0) {
-		   model.addAttribute("list", list);
-		   model.addAttribute("currentPage", currentPage);
-		   model.addAttribute("maxPage", maxPage);
-		   model.addAttribute("startPage", startPage);
-		   model.addAttribute("endPage", endPage);
-		   
-		   return "board/boardListView";
-	   }else {
-		   model.addAttribute("msg", currentPage + "페이지 출력 목록 조회 실패.");
-		   return "common/errorPage";
-	   }
-   }
+	@Autowired
+	private BoardService boardService;
+
+	// 글쓰기 페이지 이동 요청 처리용
+	@RequestMapping("bwmove.do")
+	public String moveBoardWriteForm() {
+		return "board/boardWriteForm";
+	}
+
+	// 파일업로드 기능이 있는 공지글 등록 요청 처리용
+	@RequestMapping(value = "binsert.do", method = RequestMethod.POST)
+	public String boardInsertMethod(Board board, HttpServletRequest request,
+			@RequestParam(name = "upfile", required = false) MultipartFile mfile, Model model) {
+		// 업로드된 파일 저장 폴더 지정하기
+		String savePath = request.getSession().getServletContext().getRealPath("resources/board_files");
+
+		// 첨부파일이 있을때 업로드된 파일을 지정 폴더로 옮기기
+		// 단, 첨부된 파일의 이름을 'yyyyMMddHHmmss.확장자'형식으로 바꾸어 저장함
+		if (mfile != null) {
+			String fileName = mfile.getOriginalFilename();
+			board.setOriginal_filename(fileName); //원래 파일명 vo에 저장
+			
+			//첨부된 파일의 파일명 바꾸기
+			SimpleDateFormat sdf = new SimpleDateFormat("yyyyMMddHHmmss");
+			String renameFileName = sdf.format(new java.sql.Date(System.currentTimeMillis()));
+			//원래 파일의 확장자 분리추출하여 확장자 붙여주기
+			renameFileName += "." + fileName.substring(fileName.lastIndexOf(".") + 1);
+			
+			if (fileName != null && fileName.length() > 0) {
+				try {
+					mfile.transferTo(new File(savePath + "\\" + renameFileName));
+				} catch (Exception e) {
+					e.printStackTrace();
+					model.addAttribute("msg", "전송 파일 저장 실패");
+					return "common/errorPage";
+				}
+				board.setRename_filename(renameFileName);
+			}
+		}
+
+		if (boardService.insertBoard(board) > 0) {
+			return "redirect:blist.do?page=1";
+		} else {
+			model.addAttribute("msg", "게시글 등록 실패.");
+			return "common/errorPage";
+		}
+	}
+
+	// ajax 로 인기 게시글 조회 처리용
+	@RequestMapping(value = "btop3.do", method = RequestMethod.POST)
+	@ResponseBody
+	public String selectTop3Method(HttpServletResponse response) throws UnsupportedEncodingException {
+		// 최신 공지글 3개 조회해 옴
+		ArrayList<Board> list = boardService.selectTop3(); // 결과를 받아줌
+
+		// 전송용 json 객체 준비
+		JSONObject sendJson = new JSONObject();
+		// list 옮길 json 배열 준비
+		JSONArray jarr = new JSONArray();
+
+		// list 를 jarr 로 옮기기(복사)
+		for (Board board : list) {
+			// notice 필드값 저장할 json 객체 생성
+			JSONObject job = new JSONObject();
+
+			job.put("bid", board.getBid()); // map이랑 같다
+			job.put("btitle", URLEncoder.encode(board.getBtitle(), "utf-8")); // 인코딩 해서 제이슨 객체 안에 담는다
+			job.put("bcount", board.getBcount());
+			// 날짜형식의 데이터를 json객체에 담을 때 주의사항, 뷰쪽에서 꺼낼 때 에러가나서, string형으로 바꿔서 json에 담아줘야한다.
+
+			// job 를 jarr 에 저장
+			jarr.add(job);
+		}
+
+		// 전송용 json 객체에 jarr 담음
+		sendJson.put("list", jarr);
+
+		return sendJson.toJSONString(); // jsonView 가 리턴됨
+
+	}
+
+	// 게시글 상세보기 요청 처리용
+	@RequestMapping("bdetail.do")
+	public String boardDetailViewMethod(@RequestParam("bid") int bid,
+			@RequestParam(name = "page", required = false, defaultValue = "1") int currentPage, Model model) {
+		Board board = boardService.selectBoard(bid);
+		int result = boardService.addReadCount(bid); // 조회수 1증가 처리
+
+		if (board != null && result > 0) {
+			model.addAttribute("page", currentPage);
+			model.addAttribute("board", board);
+			return "board/boardDetailView";
+		} else {
+			model.addAttribute("msg", bid + "번 게시글 조회 실패");
+			return "common/erroPage";
+		}
+
+	}
+
+	// 게시글 페이지별 목록 조회 요청 처리용
+	@RequestMapping("blist.do")
+	public String boardListMethod(@RequestParam("page") int currentPage, Model model) {
+		int limit = 10;
+		ArrayList<Board> list = boardService.selectList(currentPage, limit);
+
+		// 페이지 처리와 관련된 값 처리
+		// 총 페이지 계산을 위한 총 목록 갯수 조회
+		int listCount = boardService.getListCount();
+		int maxPage = (int) ((double) listCount / limit + 0.9);
+		// 현재 페이지가 속한 페이지그룹의 시작페이지 값 설정
+		// 예 : 현재 페이지가 35이면, 시작페이지를 31로 지정(페이지 갯수를 10개 표시할 경우)
+		int startPage = ((int) (double) currentPage / 10) * 10 + 1;
+		int endPage = startPage + 9;
+
+		if (maxPage < endPage)
+			endPage = maxPage;
+
+		if (list.size() > 0) {
+			model.addAttribute("list", list);
+			model.addAttribute("currentPage", currentPage);
+			model.addAttribute("maxPage", maxPage);
+			model.addAttribute("startPage", startPage);
+			model.addAttribute("endPage", endPage);
+
+			return "board/boardListView";
+		} else {
+			model.addAttribute("msg", currentPage + "페이지 출력 목록 조회 실패.");
+			return "common/errorPage";
+		}
+	}
 }
 
 //package com.ict.spring.board.controller;
