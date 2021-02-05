@@ -20,6 +20,7 @@ $(function(){
 	//jquery ajax로 해당 게시글에 대한 댓글 조회 요청
 	//해당 게시글의 번호를 전송함
 	var bid = ${ board.bid };
+	var loginUser = "${ sessionScope.loginUser.id }"; //로그인한 회원 아이디 변수에 대입
 	$.ajax({
 		url: "${ pageContext.request.contextPath }/rlist.do",
 		type: "post",
@@ -35,12 +36,22 @@ $(function(){
 			
 			var values = "";
 			for(var i in json.list){
-				values += "<tr><td>" + json.list[i].rwriter
-						+ "</td><td>" + json.list[i].r_create_date
-						+ "</td></tr><tr><td colspan='2'>"
-						+ decoudeURIComponent(json.list[i].rcontent).replace(/\+/gi, " ")
-						+ "</td></tr>";
-						
+				if(loginUser === json.list[i].rwriter){
+					values += "<tr><td>" + json.list[i].rwriter
+					+ "</td><td>" + json.list[i].r_create_date
+					+ "</td></tr><tr><td colspan='2'>"
+					+ "<form action='rupdate.do' method='post'><input type='hidden' name='rid' value='" + ${ json.list[i].rid  } + "'>"
+					+ "<textarea name='rcontent'>"
+					+ decoudeURIComponent(json.list[i].rcontent).replace(/\+/gi, " ")
+					+ "</textarea><input type='submit' value='수정'></form>"
+					+ "<button onclick='replyDelete(" + json.list[i].rid + ");'>삭제</bitton></td></tr>";
+				}else {
+					values += "<tr><td>" + json.list[i].rwriter
+							+ "</td><td>" + json.list[i].r_create_date
+							+ "</td></tr><tr><td colspan='2'>"
+							+ decoudeURIComponent(json.list[i].rcontent).replace(/\+/gi, " ")
+							+ "</td></tr>";
+				}
 			} //for in
 			
 			$("#new_notice").html($("rlistTbl").html() + values);
@@ -51,6 +62,10 @@ $(function(){
 	
 	//jquery document ready
 });
+
+function replyDelete(rid){
+	location.href = "${ pageContext.request.contextPath }/rdel.do?rid=" + rid;
+}
 
 function showReplyForm(){
 	$("#replyDiv").css("display", "block");	
