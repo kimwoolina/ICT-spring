@@ -16,6 +16,40 @@
 <script type="text/javascript">
 $(function(){
 	hideReplyForm(); //뷰 페이지 처음 실행 시에는  댓글달기 폼이 안보이게 함
+	
+	//jquery ajax로 해당 게시글에 대한 댓글 조회 요청
+	//해당 게시글의 번호를 전송함
+	var bid = ${ board.bid };
+	$.ajax({
+		url: "${ pageContext.request.contextPath }/rlist.do",
+		type: "post",
+		data: { ref_bid: bid },
+		dataType: "json",
+		success: function(data){
+			console.log("success : " + data);
+			
+			//object ==> string
+			var jsonStr = JSON.stringify(data);
+			//string ==> json
+			var json = JSON.parse(jsonStr);
+			
+			var values = "";
+			for(var i in json.list){
+				values += "<tr><td>" + json.list[i].rwriter
+						+ "</td><td>" + json.list[i].r_create_date
+						+ "</td></tr><tr><td colspan='2'>"
+						+ decoudeURIComponent(json.list[i].rcontent).replace(/\+/gi, " ")
+						+ "</td></tr>";
+						
+			} //for in
+			
+			$("#new_notice").html($("rlistTbl").html() + values);
+		}, error: function(jqXHR, textstatus, errorthrown){
+			console.log("error : " + jqXHR + ", " + textstatus + ", " + errorthrown);
+		}
+	}); //reply ajax
+	
+	//jquery document ready
 });
 
 function showReplyForm(){
@@ -79,6 +113,8 @@ function hideReplyForm(){
 	</table>
 <%-- 댓글목록 표시 영역 --%>
 <div id="rlistView" style="border: 1px gray;" ></div>
+<table id="rlistTbl" cellspacing="0" cellpadding="5" border="1"></table>
+</div>
 <hr>
 <%-- 댓글달기 폼 영역 --%>
 <div id="replyDiv">
