@@ -40,12 +40,14 @@ $(function(){
 					values += "<tr><td>" + json.list[i].rwriter
 					+ "</td><td>" + json.list[i].r_create_date
 					+ "</td></tr><tr><td colspan='2'>"
-					+ "<form action='rupdate.do' method='post'><input type='hidden' name='rid' value='" + ${ json.list[i].rid  } + "'>"
-					+ "<textarea name='rcontent'>"
+					+ "<form action='rupdate.do' method='post'>"
+					+ "<input type='hidden' name='rid' value='" + json.list[i].rid + "'>"
+					+ "<input type='hidden' name='rid' value='${ board.bid  }'>"
+					+ "<textarea name='rcontent' col='50' rows='3'>"
 					+ decoudeURIComponent(json.list[i].rcontent).replace(/\+/gi, " ")
 					+ "</textarea><input type='submit' value='수정'></form>"
 					+ "<button onclick='replyDelete(" + json.list[i].rid + ");'>삭제</bitton></td></tr>";
-				}else {
+				}else { //본인 댓글이 아닐 때
 					values += "<tr><td>" + json.list[i].rwriter
 							+ "</td><td>" + json.list[i].r_create_date
 							+ "</td></tr><tr><td colspan='2'>"

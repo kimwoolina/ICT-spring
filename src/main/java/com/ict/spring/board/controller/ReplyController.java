@@ -78,4 +78,17 @@ public class ReplyController {
 			return "common/errorPage";
 		}
 	}
+	
+	@RequestMapping(value="rupdate.do", method=RequestMethod.POST)
+	public String replyUpdateMethod(Reply reply,
+			@RequestParam("bid") int bid, Model model) {
+		if (replyService.updateReply(reply) > 0) {
+			return "redirect:bdetail.do?bid=" + bid;
+		} else {
+			model.addAttribute("msg", reply.getRid() + "번 댓글 삭제 실패.");
+			return "common/errorPage";
+		}
+	}
+	
+	
 }
