@@ -68,5 +68,14 @@ public class ReplyController {
 		return sendJson.toJSONString(); // jsonView 가 리턴됨
 
 	}
-
+	
+	@RequestMapping("rdel.do")
+	public String replyDeleteMethod(@RequestParam("rid") int rid, @RequestParam("bid") int bid, Model model) {
+		if (replyService.deleteReply(rid) > 0) {
+			return "redirect:bdetail.do?bid=" + bid;
+		} else {
+			model.addAttribute("msg", rid + "번 댓글 삭제 실패.");
+			return "common/errorPage";
+		}
+	}
 }

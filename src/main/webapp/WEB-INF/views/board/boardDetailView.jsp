@@ -64,7 +64,7 @@ $(function(){
 });
 
 function replyDelete(rid){
-	location.href = "${ pageContext.request.contextPath }/rdel.do?rid=" + rid;
+	location.href = "${ pageContext.request.contextPath }/rdel.do?rid=" + rid + "&bid=${ board.bid }";
 }
 
 function showReplyForm(){
