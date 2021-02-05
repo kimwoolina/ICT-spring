@@ -78,7 +78,7 @@ function hideReplyForm(){
 		</th></tr>
 	</table>
 <%-- 댓글목록 표시 영역 --%>
-
+<div id="rlistView" style="border: 1px gray;" ></div>
 <hr>
 <%-- 댓글달기 폼 영역 --%>
 <div id="replyDiv">
