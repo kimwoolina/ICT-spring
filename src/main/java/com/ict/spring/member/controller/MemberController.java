@@ -111,7 +111,7 @@ public class MemberController {
 //	}
 	
 	/*
-	 *  4. @ModelAttribute를 이용한 값 전달 방버
+	 *  4. @ModelAttribute를 이용한 값 전달 방법
 	 *  
 	 *  요청 파라미터가 많은 경우 객체 타입으로 넘겨 받게 된다.
 	 *  -->  기본생성자와 setter를 이용한 주입방식
