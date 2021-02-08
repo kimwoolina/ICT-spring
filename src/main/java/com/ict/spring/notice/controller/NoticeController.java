@@ -26,7 +26,7 @@ import org.springframework.web.servlet.ModelAndView;
 import com.ict.spring.member.model.vo.Member;
 import com.ict.spring.notice.model.service.NoticeService;
 import com.ict.spring.notice.model.vo.Notice;
-import com.ict.spring.notice.model.vo.SearchDate;
+import com.ict.spring.common.SearchDate;
 
 @Controller
 public class NoticeController {

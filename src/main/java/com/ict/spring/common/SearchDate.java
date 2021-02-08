@@ -1,4 +1,4 @@
-package com.ict.spring.notice.model.vo;
+package com.ict.spring.common;
 
 import java.sql.Date;
 

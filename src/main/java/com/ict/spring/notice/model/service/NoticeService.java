@@ -3,7 +3,7 @@ package com.ict.spring.notice.model.service;
 import java.util.ArrayList;
 
 import com.ict.spring.notice.model.vo.Notice;
-import com.ict.spring.notice.model.vo.SearchDate;
+import com.ict.spring.common.SearchDate;
 
 public interface NoticeService {
 	ArrayList<Notice> selectAll();

@@ -102,5 +102,64 @@
 			b_modify_date = sysdate
 		where bid = #{ bid }
 	</update>
+	
+	<select id="searchTitle" parameterType="com.ict.spring.common.SearchAndPage" resultMap="resultBoard">
+   		<![CDATA[
+      	SELECT *
+        FROM(SELECT ROWNUM RNUM, BID, BTITLE, BWRITER,BCONTENT,
+                  ORIGINAL_FILENAME,RENAME_FILENAME,BCOUNT,
+                 B_CREATE_DATE, B_MODIFY_DATE,B_STATUS
+               FROM (SELECT * 
+                       FROM BOARD
+                     WHERE B_STATUS = 'Y'
+                     and btitle like '%' || #{ keyword } || '%'
+                      ORDER BY BID DESC))
+      	WHERE RNUM >=#{ startRow } AND RNUM <= #{ endRow }
+      	]]>
+   </select>
+	
+   <select id="searchWriter" parameterType="com.ict.spring.common.SearchAndPage" resultMap="resultBoard">
+   		<![CDATA[
+      	SELECT *
+        FROM(SELECT ROWNUM RNUM, BID, BTITLE, BWRITER,BCONTENT,
+                  ORIGINAL_FILENAME,RENAME_FILENAME,BCOUNT,
+                 B_CREATE_DATE, B_MODIFY_DATE,B_STATUS
+               FROM (SELECT * 
+                       FROM BOARD
+                     WHERE B_STATUS = 'Y'
+                     and bwriter like '%' || #{ keyword } || '%'
+                      ORDER BY BID DESC))
+      	WHERE RNUM >=#{ startRow } AND RNUM <= #{ endRow }
+      	]]>
+   </select>
+   
+   <select id="searchDate" parameterType="com.ict.spring.common.SearchAndPage" resultMap="resultBoard">
+   		<![CDATA[
+      	SELECT *
+        FROM(SELECT ROWNUM RNUM, BID, BTITLE, BWRITER,BCONTENT,
+                  ORIGINAL_FILENAME,RENAME_FILENAME,BCOUNT,
+                 B_CREATE_DATE, B_MODIFY_DATE,B_STATUS
+               FROM (SELECT * 
+                       FROM BOARD
+                     WHERE B_STATUS = 'Y'
+                     and b_create_date between #{ begin } and #{ end }
+                      ORDER BY BID DESC))
+      	WHERE RNUM >=#{ startRow } AND RNUM <= #{ endRow }
+      	]]>
+   </select>
 
+	<select id="getSearchTitleListCount" parameterType="string" resultType="_int">
+		select count(*) from board
+		where btitle like '%' || #{ keyword } || '%'
+	</select>
+	
+	<select id="getSearchWriterListCount" parameterType="string" resultType="_int">
+		select count(*) from board
+		where bwriter like '%' || #{ keyword } || '%'
+	</select>
+	
+	<select id="getSearchDateListCount" parameterType="com.ict.spring.common.SearchDate" resultType="_int">
+		select count(*) from board
+		where b_create_date between #{ begin } and #{ end }
+	</select>
 </mapper>

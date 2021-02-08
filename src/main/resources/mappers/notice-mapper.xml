@@ -77,7 +77,7 @@
    		where nwriter like '%' || #{ keyword } || '%'
    </select>
    
-   <select id="searchDate" parameterType="com.ict.spring.notice.model.vo.SearchDate" resultMap="noticeResultSet">
+   <select id="searchDate" parameterType="com.ict.spring.common.SearchDate" resultMap="noticeResultSet">
    		select * from notice
    		where n_create_date between #{ begin } and #{ end }
    </select>

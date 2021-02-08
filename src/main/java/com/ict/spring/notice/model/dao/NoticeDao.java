@@ -8,7 +8,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Repository;
 
 import com.ict.spring.notice.model.vo.Notice;
-import com.ict.spring.notice.model.vo.SearchDate;
+import com.ict.spring.common.SearchDate;
 
 @Repository("noticeDao")
 public class NoticeDao {

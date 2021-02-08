@@ -7,7 +7,7 @@ import org.springframework.stereotype.Service;
 
 import com.ict.spring.notice.model.dao.NoticeDao;
 import com.ict.spring.notice.model.vo.Notice;
-import com.ict.spring.notice.model.vo.SearchDate;
+import com.ict.spring.common.SearchDate;
 
 @Service("noticeService")
 public class NoticeServiceImpl implements NoticeService {
