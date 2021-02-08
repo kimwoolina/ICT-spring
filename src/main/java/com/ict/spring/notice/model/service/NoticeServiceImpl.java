@@ -7,6 +7,7 @@ import org.springframework.stereotype.Service;
 
 import com.ict.spring.notice.model.dao.NoticeDao;
 import com.ict.spring.notice.model.vo.Notice;
+import com.ict.spring.notice.model.vo.SearchDate;
 
 @Service("noticeService")
 public class NoticeServiceImpl implements NoticeService {
@@ -42,6 +43,21 @@ public class NoticeServiceImpl implements NoticeService {
 	@Override
 	public ArrayList<Notice> selectNewTop3() {
 		return noticeDao.selectNewTop3();
+	}
+
+	@Override
+	public ArrayList<Notice> selectSearchTitle(String keyword) {
+		return noticeDao.selectSearchTitle(keyword);
+	}
+
+	@Override
+	public ArrayList<Notice> selectSearchWriter(String keyword) {
+		return noticeDao.selectSearchWriter(keyword);
+	}
+
+	@Override
+	public ArrayList<Notice> selectSearchDate(SearchDate dates) {
+		return noticeDao.selectSearchDate(dates);
 	}
 
 }

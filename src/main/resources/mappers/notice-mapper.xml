@@ -64,10 +64,24 @@
    
    <delete id="deleteNotice" parameterType="_int">
       delete from notice
-      where nid = #{ nid} 
+      where nid = #{ nid }
    </delete>
 
-      
+   <select id="searchTitle" parameterType="string" resultMap="noticeResultSet">
+   		select * from notice
+   		where ntitle like '%' || #{ keyword } || '%'
+   </select>
+	
+   <select id="searchWriter" parameterType="string" resultMap="noticeResultSet">
+   		select * from notice
+   		where nwriter like '%' || #{ keyword } || '%'
+   </select>
+   
+   <select id="searchDate" parameterType="com.ict.spring.notice.model.vo.SearchDate" resultMap="noticeResultSet">
+   		select * from notice
+   		where n_create_date between #{ begin } and #{ end }
+   </select>
+	
 </mapper>
 
 

@@ -8,6 +8,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Repository;
 
 import com.ict.spring.notice.model.vo.Notice;
+import com.ict.spring.notice.model.vo.SearchDate;
 
 @Repository("noticeDao")
 public class NoticeDao {
@@ -42,6 +43,21 @@ public class NoticeDao {
 	//최근 공지글 몇개 조회
 	public ArrayList<Notice> selectNewTop3(){
 		List<Notice> list = sqlSession.selectList("noticeMapper.selectNewTop3");
+		return (ArrayList<Notice>)list;
+	}
+
+	public ArrayList<Notice> selectSearchTitle(String keyword) {
+		List<Notice> list = sqlSession.selectList("noticeMapper.searchTitle", keyword);
+		return (ArrayList<Notice>)list;
+	}
+
+	public ArrayList<Notice> selectSearchWriter(String keyword) {
+		List<Notice> list = sqlSession.selectList("noticeMapper.searchWriter", keyword);
+		return (ArrayList<Notice>)list;
+	}
+
+	public ArrayList<Notice> selectSearchDate(SearchDate dates) {
+		List<Notice> list = sqlSession.selectList("noticeMapper.searchDate", dates);
 		return (ArrayList<Notice>)list;
 	}
 	
