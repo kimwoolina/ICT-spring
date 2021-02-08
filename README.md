@@ -1,7 +1,7 @@
 # ICT-spring
 Test web application made with Spring framework
 
-## 프로젝트 실행
+## Getting Started
 
 ```
 add folder
