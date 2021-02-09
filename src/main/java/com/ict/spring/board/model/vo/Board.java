@@ -1,8 +1,9 @@
 package com.ict.spring.board.model.vo;
 
+import java.io.Serializable;
 import java.sql.Date;
 
-public class Board {
+public class Board implements Serializable{
 	private final static long serialVersionUID = 3333L;
 	
 	private int bid;

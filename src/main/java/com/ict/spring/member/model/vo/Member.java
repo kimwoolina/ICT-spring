@@ -1,8 +1,11 @@
 package com.ict.spring.member.model.vo;
 
+import java.io.Serializable;
 import java.sql.Date;
 
-public class Member {
+public class Member implements Serializable {
+	private final static long serialVersionUID = 1111L;
+	
 	private String id;
 	private String pwd;
 	private String name;
