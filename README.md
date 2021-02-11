@@ -16,3 +16,10 @@ add folder
 and add jstl.jar, jdbc.jar file in the lib folder
 ``` 
   
+## Development Environment
+- Operating System : Microsoft Window 10
+- IDE : Spring Tool Suite 3 (Version: 3.9.13.RELEASE)
+- Web Application Server : Apache Tomcat 8.5
+- Database : Oracle 11g Express Edition
+- Framework & Open API : Spring, MyBatis, Ajax, jQuery
+- Version Manage System : Git
