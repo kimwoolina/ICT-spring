@@ -75,7 +75,6 @@
 		</layout>
 	</appender>
 	
-	
 	<appender name="myConsole" class="org.apache.log4j.ConsoleAppender">
 		<param name="Target" value="System.out" />
 		<layout class="org.apache.log4j.PatternLayout">
@@ -83,11 +82,10 @@
 		</layout>
 	</appender>
 
-	<logger name="com.ict.spring.member.controller.MemberController" additivity="false">
+	<logger name="com.ict.hhw.member.controller.MemberController" additivity="false">
 		<level value="debug"/>
 		<appender-ref ref="myConsole"/>
 	</logger>
-	
 	
 	<!-- Application Loggers -->
 	<logger name="com.ict.spring">

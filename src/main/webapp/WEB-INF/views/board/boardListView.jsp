@@ -130,7 +130,7 @@ function showWriteForm(){
 
 
 <%-- 현재 페이지가 1이 아니면 링크설정, 현재 1페이지이면 링크없음 --%>
-<c:if test="${ empty action}">
+<c:if test="${ empty action }">
 <%-- 페이징 처리 
    [맨처음][이전] 숫자...........  [다음][맨끝]
 --%>
