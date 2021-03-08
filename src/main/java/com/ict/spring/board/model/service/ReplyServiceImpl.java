@@ -5,8 +5,8 @@ import java.util.ArrayList;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import com.ict.spring.board.model.dao.ReplyDao;
 import com.ict.spring.board.model.vo.Reply;
-import com.ict.spring.board.model.vo.ReplyDao;
 
 @Service("replyService")
 public class ReplyServiceImpl implements ReplyService {
